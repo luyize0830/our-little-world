@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" role="img" aria-label="照片加载失败占位图">
+  <rect width="300" height="240" fill="#FBEFE2"/>
+  <g fill="none" stroke="#C8A27A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="46" y="42" width="208" height="150" rx="12"/>
+    <path d="M46 156l52-44 40 34 34-28 66 50"/>
+    <circle cx="112" cy="88" r="14"/>
+  </g>
+  <text x="150" y="218" text-anchor="middle" font-family="KaiTi,STKaiti,serif" font-size="20" fill="#8C7B72">照片在路上</text>
+</svg>

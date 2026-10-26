@@ -1,0 +1,7 @@
+# 原始素材不入库（45MB），只保留处理后的成品
+assets/img/photos/raw/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini

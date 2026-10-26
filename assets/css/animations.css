@@ -1,0 +1,264 @@
+/* ==========================================================================
+   animations.css — 全部 keyframes + 减少动态效果的降级
+   ========================================================================== */
+
+/* ---------- 入场 ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* 依次入场：JS 通过 --i 传入序号 */
+.reveal { opacity: 0; animation: fadeUp var(--d-slow) var(--ease-out) both; animation-delay: calc(var(--i, 0) * var(--stagger)); }
+
+/* 滚动进入视口才播放（配合 IntersectionObserver） */
+.reveal-on-scroll { opacity: 0; transform: translateY(20px); transition: opacity var(--d-slow) var(--ease-out), transform var(--d-slow) var(--ease-out); }
+.reveal-on-scroll.is-in { opacity: 1; transform: none; }
+
+/* ---------- 常驻微动 ---------- */
+@keyframes floatY {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+.float { animation: floatY 3.5s ease-in-out infinite alternate; }
+
+@keyframes pulseDot {
+  0%   { box-shadow: 0 0 0 0 var(--blush-soft); }
+  70%  { box-shadow: 0 0 0 10px rgba(246, 198, 201, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(246, 198, 201, 0); }
+}
+
+@keyframes breath {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes caretBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- 爱心粒子 ---------- */
+@keyframes heartRise {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg) scale(.8); }
+  12%  { opacity: var(--o, .28); }
+  88%  { opacity: var(--o, .28); }
+  100% { opacity: 0; transform: translateY(-105vh) rotate(var(--r, 24deg)) scale(1.05); }
+}
+
+/* 点击后飘散的小爱心（一次性，动画结束由 JS 移除 DOM） */
+@keyframes heartPop {
+  0%   { opacity: 1; transform: translate(0, 0) scale(.5); }
+  100% { opacity: 0; transform: translate(var(--dx, 0px), -72px) scale(1.1); }
+}
+.heart-pop {
+  position: fixed;
+  z-index: 300;
+  width: 18px;
+  height: 18px;
+  color: var(--blush-deep);
+  pointer-events: none;
+  animation: heartPop 900ms var(--ease-out) both;
+}
+
+/* ---------- toast ---------- */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(14px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-8px) scale(.98); }
+}
+
+/* ---------- 表单反馈 ---------- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+.shake { animation: shake 200ms var(--ease-out) both; }
+
+/* ---------- 情话卡翻转 ---------- */
+@keyframes flipY {
+  0%   { opacity: 1; transform: rotateX(0deg); }
+  45%  { opacity: 0; transform: rotateX(72deg); }
+  55%  { opacity: 0; transform: rotateX(-72deg); }
+  100% { opacity: 1; transform: rotateX(0deg); }
+}
+
+/* 数字翻牌淡入 */
+@keyframes digitFlip {
+  from { opacity: .2; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.digit-flip { animation: digitFlip 300ms var(--ease-out) both; }
+
+/* ---------- SVG 描线（手绘勾、圈选） ---------- */
+@keyframes dashDraw { to { stroke-dashoffset: 0; } }
+.dash-draw { stroke-dasharray: var(--len, 120); stroke-dashoffset: var(--len, 120); animation: dashDraw 300ms var(--ease-out) forwards; }
+
+/* ---------- 开场动画：信封 ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  background: var(--cream);
+  overflow: hidden;
+}
+.intro.is-leaving { animation: introLeave 420ms var(--ease-out) both; }
+@keyframes introLeave { to { opacity: 0; transform: translateY(-100%); } }
+
+.intro__skip {
+  position: absolute;
+  right: var(--sp-4);
+  bottom: calc(var(--sp-5) + env(safe-area-inset-bottom));
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-small);
+  color: var(--ink-light);
+  opacity: .5;
+  letter-spacing: .1em;
+}
+
+.intro__stage { width: min(320px, 78vw); text-align: center; }
+
+.intro__envelope {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  margin: 0 auto;
+  perspective: 700px;
+  animation: envelopeDrop 600ms var(--ease-back) both;
+}
+@keyframes envelopeDrop {
+  from { opacity: 0; transform: translateY(-140px) rotate(-14deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-3deg); }
+}
+
+/* 信封分层：背板(1) < 信纸(2) < 前袋(3) < 信封盖(4) */
+.intro__envelope svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.env-back  { z-index: 1; }
+.env-front { z-index: 3; }
+
+.intro__flap {
+  z-index: 4;
+  transform-origin: top center;
+  backface-visibility: visible;
+}
+.intro.is-open .intro__flap { animation: flapOpen 560ms var(--ease-out) 520ms both; }
+@keyframes flapOpen {
+  0%   { transform: rotateX(0deg); z-index: 4; }
+  55%  { z-index: 4; }
+  100% { transform: rotateX(178deg); z-index: 1; }
+}
+
+.intro__paper {
+  position: absolute;
+  left: 8%;
+  bottom: 8%;
+  z-index: 2;
+  width: 84%;
+  padding: var(--sp-4) var(--sp-3);
+  background: var(--milk);
+  border: 1px solid var(--latte-line);
+  border-radius: var(--r-paper);
+  box-shadow: var(--shadow-warm-sm);
+}
+.intro.is-open .intro__paper { animation: paperRise 620ms var(--ease-out) 900ms both; }
+@keyframes paperRise {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-58%); }
+}
+
+.intro__line1 {
+  font-family: var(--font-hand);
+  font-size: 24px;
+  color: var(--ink);
+  min-height: 1.6em;
+}
+.intro__line2 {
+  margin-top: var(--sp-2);
+  font-family: var(--font-hand);
+  font-size: 19px;
+  color: var(--ink-light);
+  opacity: 0;
+}
+.intro.is-typed .intro__line2 { animation: fadeIn 600ms var(--ease-out) both; }
+
+.intro__stars {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+.intro__stars svg { width: 20px; height: 20px; color: var(--sun); opacity: 0; }
+.intro.is-typed .intro__stars svg { animation: scaleIn 400ms var(--ease-back) both; }
+.intro.is-typed .intro__stars svg:nth-child(2) { animation-delay: 180ms; }
+.intro.is-typed .intro__stars svg:nth-child(3) { animation-delay: 340ms; }
+
+/* ---------- 祝福横幅彩带 ---------- */
+@keyframes ribbonFall {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+  15%  { opacity: .9; }
+  100% { opacity: 0; transform: translateY(96px) rotate(220deg); }
+}
+
+/* ---------- 告白页飘落 ---------- */
+@keyframes confettiFall {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+  10%  { opacity: .9; }
+  100% { opacity: 0; transform: translateY(88vh) rotate(320deg); }
+}
+
+/* ---------- 页面切换淡入 ---------- */
+.page-enter { animation: fadeIn 180ms var(--ease-out) both; }
+
+/* ---------- 首屏入场：JS 就绪前先隐藏，避免闪烁 ---------- */
+body.js [data-reveal] { opacity: 0; }
+body.js.is-ready [data-reveal],
+body.js [data-reveal].reveal { opacity: 1; }
+body.js [data-reveal]:not(.reveal) { animation: none; }
+/* 兜底：若 6 秒后仍未加 .reveal（JS 异常），强制显示 */
+body.js.is-ready [data-reveal]:not(.reveal) { opacity: 1; }
+
+/* ==========================================================================
+   减少动态效果：全部降级为瞬时显示
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+  /* 拍立得的手绘倾斜角是造型的一部分，不属于动效，必须保留 */
+  .polaroid,
+  .polaroid.reveal-on-scroll,
+  .polaroid.reveal-on-scroll.is-in { transform: rotate(var(--tilt, 0deg)) !important; }
+  .heart-field { display: none; }
+  .fina__rain { display: none; }
+  .intro__envelope,
+  .intro__paper,
+  .intro__flap { animation: none !important; }
+  .intro__paper { transform: translateY(-58%); }
+  .intro__line2,
+  .intro__stars svg { opacity: 1 !important; }
+}

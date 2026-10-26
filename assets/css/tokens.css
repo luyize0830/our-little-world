@@ -1,0 +1,95 @@
+/* ==========================================================================
+   tokens.css — 全站设计变量（温柔奶油手绘风）
+   想改主题色 / 字体 / 圆角 / 动效时长，只改这个文件
+   ========================================================================== */
+
+:root {
+  /* ---------- 色板 ---------- */
+  --cream: #FFF8F0;        /* 页面主背景 */
+  --cream-deep: #FBEFE2;   /* 卡片、区块背景 */
+  --milk: #FFFFFF;         /* 信纸、输入框背景 */
+  --latte: #C8A27A;        /* 手绘描边、分隔线 */
+  --blush: #F6C6C9;        /* 强调色：爱心、高亮 */
+  --blush-deep: #E8909A;   /* 主按钮、链接 */
+  --sage: #A8C3A0;         /* 辅助色：已完成、叶子 */
+  --ink: #5A4A42;          /* 正文文字（不用纯黑） */
+  --ink-light: #8C7B72;    /* 次要文字、日期 */
+  --sun: #F7D08A;          /* 光晕、星星、彩蛋色 */
+
+  /* 半透明派生色 */
+  --blush-soft: rgba(246, 198, 201, .28);
+  --sun-soft: rgba(247, 208, 138, .32);
+  --sage-soft: rgba(168, 195, 160, .26);
+  --latte-soft: rgba(200, 162, 122, .16);
+  --latte-line: rgba(200, 162, 122, .45);
+
+  /* 暖色阴影（禁止硬黑阴影） */
+  --shadow-warm: 0 6px 20px rgba(200, 162, 122, .16);
+  --shadow-warm-lg: 0 12px 32px rgba(200, 162, 122, .22);
+  --shadow-warm-sm: 0 2px 8px rgba(200, 162, 122, .12);
+
+  /* ---------- 字体 ---------- */
+  --font-hand: "Zhi Mang Xing", "Ma Shan Zheng", "STKaiti", "KaiTi", "Kaiti SC", cursive;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-num: "DIN Alternate", "Bahnschrift", "Avenir Next Condensed", var(--font-body);
+
+  /* 字号阶梯 */
+  --fs-hero: 64px;   /* 恋爱天数大数字 */
+  --fs-h1: 32px;     /* 主标题 */
+  --fs-h2: 22px;     /* 区块标题 */
+  --fs-body: 16px;   /* 正文 */
+  --fs-small: 13px;  /* 辅助文字 */
+  --lh: 1.7;
+
+  /* ---------- 形状与质感 ---------- */
+  --r-card: 20px;
+  --r-photo: 12px;
+  --r-paper: 4px;
+  --r-pill: 999px;
+  /* 手绘不规则圆角（手账贴纸感） */
+  --r-hand: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --r-hand-alt: 15px 225px 15px 255px / 255px 15px 225px 15px;
+  --bw: 2px;
+
+  /* ---------- 间距 ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* ---------- 布局 ---------- */
+  --page-max: 880px;
+  --topbar-h: 56px;
+  --touch-min: 44px;   /* 触控热区最小值 */
+
+  /* ---------- 动效 ---------- */
+  --ease-out: cubic-bezier(.22, .61, .36, 1);
+  --ease-back: cubic-bezier(.34, 1.56, .64, 1);
+  --d-fast: 120ms;
+  --d-base: 240ms;
+  --d-slow: 420ms;
+  --stagger: 60ms;     /* 元素依次入场的间隔 */
+
+  /* ---------- 运行时由 JS 注入的元素级参数（此处只给默认值兜底） ---------- */
+  --i: 0;         /* 入场动画序号 */
+  --o: .28;       /* 漂浮粒子透明度 */
+  --r: 24deg;     /* 漂浮粒子旋转角 */
+  --dx: 0px;      /* 爱心飘散的横向位移 */
+  --len: 120;     /* SVG 描线动画长度 */
+  --tilt: 0deg;   /* 拍立得相框的手绘倾斜角 */
+}
+
+/* 移动端收敛字号 */
+@media (max-width: 480px) {
+  :root {
+    --fs-hero: 52px;
+    --fs-h1: 28px;
+    --fs-h2: 20px;
+    --sp-7: 36px;
+    --sp-8: 48px;
+  }
+}
